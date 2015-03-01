@@ -1,19 +1,9 @@
 @import 'config'
+@import 'compass'
 
 body
-  /* Safari 4-5, Chrome 1-9 */
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(black), to(white))
-  /* Safari 5.1, Chrome 10+ */
-  background: -webkit-linear-gradient(top, black, white)
-  /* Firefox 3.6+ */
-  background: -moz-linear-gradient(top, black, white)
-  /* IE 10 */
-  background: -ms-linear-gradient(top, black, white)
-  /* Opera 11.10+ */
-  background: -o-linear-gradient(top, black, white)
   color: #{"{{ theme.text_color }}"}
   font: 14px/1.4 normal #{"{{ theme.text_font | font_family }}"}
-  margin: 100px
 
 a
   color: #72C29B
@@ -38,10 +28,12 @@ ol.unstyled
   padding: 0
 
 header
+  padding: 100px 0px
   font-family: #{"{{ theme.header_font | font_family }}"}
   margin-bottom: $marginSize
   padding-bottom: $marginSize * 3
   text-align: center
+  @include background-image(linear-gradient(black, black 20%, white))
 
   a
     color: #666
@@ -52,6 +44,9 @@ header
 
 h1, h2, h3, h4, h5
   font-family: #{"{{ theme.header_font | font_family }}"}
+
+div.wrap-outer
+  margin: 100px
 
 div.wrap
   display: table

@@ -15,8 +15,6 @@
 // Here we're including a couple CoffeeScript files written for different areas of the store, we're
 // also including jQuery in our layout.html from Google so that it can be better cached by users.
 //
-//= require bower_components/angular/angular.js
-//= require bower_components/angular-contentful/dist/angular-contentful.js
 //= require javascripts/product
 //= require javascripts/cart
 //= require javascripts/gallery
