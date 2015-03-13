@@ -15,6 +15,10 @@
 // Here we're including a couple CoffeeScript files written for different areas of the store, we're
 // also including jQuery in our layout.html from Google so that it can be better cached by users.
 //
+//
+//= require bower_components/angular-route/angular-route
+//= require bower_components/prismic.io/dist/prismic.io
+//= require bower_components/angular-prismicio/dist/angular-prismicio
 //= require javascripts/product
 //= require javascripts/cart
 //= require javascripts/gallery

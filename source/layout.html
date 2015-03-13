@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="gallery">
   <head>
     <title>{{ store.name }} &mdash; {{ page.name }}</title>
 
@@ -8,10 +8,13 @@
     <meta name="keywords" content="{{ page.meta_keywords }}">
 
     <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.js" type="text/javascript"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
-    <script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/packery/1.3.2/packery.pkgd.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Cherry+Swash' rel='stylesheet' type='text/css'>
+    <script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     {{ head_content }}
   </head>
@@ -28,7 +31,7 @@
       <nav id="main-nav" role="navigation">
         <ul class="nav-items">
           <li id="gallery" {% if page.full_url contains ‘/gallery’ %}class="selected"{% endif %}>
-            <a href="/"></a>
+            <a href="/gallery"></a>
           </li>
           <li id="shop" {% if page.full_url contains ‘/products’ %}class="selected"{% endif %}>
             <a href="/products"></a>
@@ -37,14 +40,15 @@
             <a href="/tour"></a>
           </li>
           <li id="news" {% if page.full_url contains ‘/news’ %}class="selected"{% endif %}>
-            <a href="/news"></a>
+            <a href="https://www.facebook.com/RAEVENAartist" target="_blank"></a>
           </li>
-          <li id="about" {% if page.full_url contains ‘/about-us’ %}class="selected"{% endif %}>
-            <a href="/about-us"></a>
+          <li id="about" {% if page.full_url contains ‘/about’ %}class="selected"{% endif %}>
+            <a href="/about"></a>
           </li>
           <li id="contact" {% if page.full_url contains ‘/contact’ %}class="selected"{% endif %}>
             <a href="/contact"></a>
           </li>
+<!--  -->
         </ul>
       </nav>
 
@@ -52,55 +56,7 @@
 
     <div class="wrap-outer">
       <div class="wrap">
-        <aside>
-          <section>
-            <a href="/cart">Cart ({{ cart.total | money_with_sign }})</a>
-          </section>
-
-          {% if theme.show_search %}
-          <section>
-            <form action="/products" method="get">
-              <label>Search: <input type="text" name="search"></label>
-            </form>
-          </section>
-          {% endif %}
-
-          <nav>
-            <h3>Products</h3>
-            <ul class="unstyled">
-              <li><a href="/products">All</a></li>
-              {% for category in categories.active %}
-              <li>{{ category | link_to }}</li>
-              {% endfor %}
-            </ul>
-
-            {% if artists.active != blank %}
-            <h3>Artists</h3>
-            <ul class="unstyled">
-              <li><a href="/products">All</a></li>
-              {% for artist in artists.active %}
-              <li>{{ artist | link_to }}</li>
-              {% endfor %}
-            </ul>
-            {% endif %}
-
-            <h3>Info</h3>
-            <ul class="unstyled">
-              {% for page in pages.all %}
-              <li>{{ page | link_to }}</li>
-              {% endfor %}
-              <li><a href="/contact">Contact Us</a></li>
-              {% if store.website != blank %}
-              <li><a href="{{ store.website }}">Back to Site</a></li>
-              {% endif %}
-            </ul>
-          </nav>
-
-          <!-- <cite>{{ bigcartel_credit }}</cite> -->
-        </aside>
-
-        <section class="content">
-          <h1>{{ page.name }}</h1>
+        <section id="content" class="content">
 
           {% if errors != blank %}
           <ul class="unstyled errors">
@@ -113,25 +69,22 @@
           {% if page.category == 'custom' %}
             {{ page_content | paragraphs }}
           {% else %}
+
             {{ page_content }}
           {% endif %}
         </section>
       </div>
     </div>
-
+      <div class="image-footer"></div>
     <footer>
-
-
-
-
-      <li {% if page.full_url contains ‘/cart’ %}class="selected”{% endif %}><a href=“/cart">Cart</a></li>
+    <ul class="unstyled social menu-horizontal">
+      <li {% if page.full_url contains ‘/cart’ %}class="selected”{% endif %}><a href=“/cart"><span class="fa fa-3x fa-shopping-cart"></span><span class="text">Cart</span></a></li>
       {% if theme.twitter_username != blank %}
-      <li><a href="http://twitter.com/{{ theme.twitter_username }}" title="Follow us on Twitter">Twitter</a></li>
+      <li><a href="http://twitter.com/{{ theme.twitter_username }}" title="Follow us on Twitter"><span class="fa fa-3x fa-twitter"></span><span class="text">Twitter</span></a></li>
       {% endif %}
-      <li><a href="http://facebook.com/artist-rae-vena" title="Rae Vena on Facebook">Facebook</a></li>
-      <li><a href="http://instagram.com/raevena" title="Instagram">Instagram</a></li>
-
+      <li><a href="http://facebook.com/artist-rae-vena" title="Rae Vena on Facebook"><span class="fa fa-3x fa-facebook"></span><span class="text">Facebook</span></a></li>
+      <li><a href="http://instagram.com/raevena" title="Instagram"><span class="fa fa-3x fa-instagram"><span class="text">Instagram</span></a></li>
+    </ul>
     </footer>
-
   </body>
 </html>

@@ -16,10 +16,17 @@
   ],
   "dependencies": {
     "angular-contentful": "~1.1.0",
-    "angular": "~1.3.12",
-    "masonry": "~3.2.2"
+    "jquery": ">=1.9.0",
+    "modernizr": "^2.6.2",
+    "angular-prismic": "~0.0.1",
+    "angular-route": "~1.3.14",
+    "angular-prismicio": "~0.3.0",
+    "angular-masonry": "~0.11.0",
+    "fancybox": "~2.1.5"
   },
   "devDependencies": {
-    "jquery.masonry": "~3.1.0"
-  }
+    "jquery.masonry": "~3.1.0",
+    "angular-prismic": "~0.0.1"
+  },
+  "homepage": "https://github.com/acao/artist-rae-vena-cartel"
 }

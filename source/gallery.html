@@ -1,17 +1,14 @@
-<div>
-  <h3>Thanks! Your order has been placed.</h3>
-  <p>We&#8217;ll start working right away on getting your order out to you. Please <a href="/contact">contact us</a> if you have any questions.</p>
-  <a href="/">Keep shopping &rarr;</a>
-</div>
-
-<script data-require="angular.js@*" data-semver="1.3.7" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.7/angular.js"></script>
-
-
-<div ng-repeat="entry in entries track by entry.sys.id" ng-controller="EntryController">
-  Entry {{sys.id}} {{entryTitle()}}
-  <ul>
-    <li ng-repeat="field in contentType().fields track by field.id">
-      {{field.name}}: {{entry.fields[field.id]}}
+{% raw %}
+  <ul ng-controller="galleryCtrl" id="gallery-list"  column-width="200">
+    <li class="masonry-brick" data-ng-init="init()" ng-repeat="artwork in artworks track by artwork.id" >
+<!--     TITLE
+    {{ $index }}
+      {{ artwork.type }}
+      {{ artwork.slug }} -->
+      <a rel="gallery" class="fancybox" href="{{ artwork.fragments['work.photo'].value.main.url }}">
+      <img alt="{{ artwork.fragments['work.title'].value }}" ng-src="{{ artwork.fragments['work.photo'].value.main.url }}"></img>
+      </a>
+      <div prismic-html fragment="work.photo"></div>
     </li>
-  </ul>
-</div>
+</ul>
+{% endraw %}

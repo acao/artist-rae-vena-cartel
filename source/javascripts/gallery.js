@@ -1,111 +1,116 @@
 (function () {
+'use strict';
 
-  var MyApp = angular.module('MyApp', ['ng', 'ngResource']);
 
-  MyApp.factory('flickrPhotos', function ($resource) {
-    return $resource('https://api.flickr.com/services/feeds/activity.gne', { format: 'json', user_id: 'raevena', jsoncallback: 'JSON_CALLBACK' }, { 'load': { 'method': 'JSONP' } });
+
+  // Modules
+  var gallery = angular.module('gallery', [
+    'ngRoute',
+    // 'gallery.directives',
+    'prismic.io'
+  ]).run(function(){
+
   });
 
-  MyApp.directive('masonry', function ($parse) {
-    return {
-      restrict: 'AC',
-      link: function (scope, elem, attrs) {
-        elem.masonry({ itemSelector: '.masonry-item', columnWidth: $parse(attrs.masonry)(scope) });
-      }
-    };
-  });
 
-  MyApp.directive('masonryItem', function () {
-    return {
-      restrict: 'AC',
-      link: function (scope, elem, attrs) {
-        elem.imagesLoaded(function () {
-          elem.parents('.masonry').masonry('reload');
+
+  var container = document.querySelector('#gallery-list');
+  angular.element(container).ready(function() {
+
+    });
+
+
+  gallery.config(['PrismicProvider', function(PrismicProvider) {
+    PrismicProvider.setApiEndpoint('https://artist-rae-vena.cdn.prismic.io/api');
+    // PrismicProvider.setAccessToken('');
+    //PrismicProvider.setClientId('asdsadsa');
+    // PrismicProvider.setClientSecret('');
+    // PrismicProvider.setLinkResolver(function(ctx, doc) {
+    //     return 'detail.html?id=' + doc.id + '&slug=' + doc.slug + ctx.maybeRefParam;
+    // });
+  }]);
+
+  gallery.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/:page?', {templateUrl: 'views/artwork.html', controller: 'galleryCtrl'});
+    $routeProvider.when('/artwork/:id/:slug', {templateUrl: 'views/artwork.html', controller: 'artWorkController'});
+    $routeProvider.otherwise({redirectTo: '/'});
+  }]);
+
+
+  gallery.controller('galleryCtrl', ['$scope', '$routeParams', 'Prismic', function($scope, $routeParams, Prismic) {
+    var page = parseInt($routeParams.page) || "1";
+    Prismic.all().then(function(artworks){
+      $scope.artworks = artworks.results;
+      console.log(artworks);
+      var $container = $('#gallery-list');
+       angular.element($container).ready(function(){
+          $container.packery({
+            itemSelector: '.masonry-brick',
+            width:200,
+            gutter: 10
+          });
+          $(".fancybox").fancybox({
+            padding : 0,
+            beforeShow : function() {
+                var alt = this.element.find('img').attr('alt');
+
+                this.inner.find('img').attr('alt', alt);
+
+                this.title = alt;
+            },
+            helpers : {
+              overlay : {
+                css : {
+                    'background' : 'rgba(0, 0, 0, 0.95)'
+                }
+              }
+            }
+          });
         });
+
+      // Angular doesn't repeat over collections created on the fly, so we have to create it here
+     if (artworks.total_pages > 1) $scope.paginationRange = _.range(page, artworks.total_pages+1);
+    });
+
+    // init
+
+  }]);
+
+  gallery.controller('artWorkController', ['$scope', '$routeParams', 'Prismic', '$location', function($scope, $routeParams, Prismic, $location) {
+    Prismic.document($routeParams.id).then(function(document){
+      if (document.slug === $routeParams.slug) {
+        Prismic.ctx().then(function(ctx) {
+          $scope.documentHtml = document.asHtml(ctx);
+        })
       }
-    };
-  });
+      else if (document.slugs.indexOf($routeParams.slug) >= 0) {
+        $location.path('/artwork/'+document.id+'/'+document.slug);
+      }
+      else {
+        // Should display some kind of error; will just redirect to / for now
+        $location.path('/');
+      }
+    });
+  }]);
 
-  MyApp.controller('MasonryCtrl', function ($scope, flickrPhotos) {
-    $scope.photos = flickrPhotos.load({ tags: 'dogs' });
-  });
-});
+  gallery.directive('galleryList', function ($parse) {
+      return {
+        restrict: 'AC',
+        link: function (scope, elem, attrs) {
+          elem.packery({ itemSelector: '.masonry-brick', columnWidth: $parse(attrs.packery)(scope) });
+        }
+      };
+    });
 
-  // // Modules
-  // angular.module('gallery', [
-  //   'ngRoute',
-  //   'myApp.filters',
-  //   'myApp.services',
-  //   'myApp.directives',
-  //   'myApp.controllers',
-  //   'prismic.io',
-  //   'ngSanitize'
-  // ]).
-  // config(['$routeProvider', function($routeProvider) {
-  //   $routeProvider.when('/:page?', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'});
-  //   $routeProvider.when('/document/:id/:slug', {templateUrl: 'partials/document.html', controller: 'DocumentCtrl'});
-  //   $routeProvider.when('/search/:q*/:page?', {templateUrl: 'partials/search.html', controller: 'SearchCtrl'});
-  //   $routeProvider.otherwise({redirectTo: '/'});
-  // }]).
-  // config(['PrismicProvider', function(PrismicProvider) {
-  //   PrismicProvider.setApiEndpoint('https://lesbonneschoses.prismic.io/api');
-  //   PrismicProvider.setAccessToken('');
-  //   PrismicProvider.setClientId('');
-  //   PrismicProvider.setClientSecret('');
-  //   PrismicProvider.setLinkResolver(function(ctx, doc) {
-  //     return '#/document/' + doc.id + '/' + doc.slug + ctx.maybeRefParam;
-  //   });
-  // }]);
-  //
-  // angular.module('gallery.controllers', [])
-  // .controller('GalleryCtrl', ['$scope', '$routeParams', 'Prismic', function($scope, $routeParams, Prismic) {
-  //   var page = parseInt($routeParams.page) || "1";
-  //   Prismic.ctx().then(function(ctx){
-  //     ctx.api.form('everything').page(page).ref(ctx.ref).submit(function(err, documents){
-  //       if (err) {
-  //         // Should display some kind of error; will just redirect to / for now
-  //         $location.path('/');
-  //       }
-  //       else {
-  //         $scope.documents = documents;
-  //         // Angular doesn't repeat over collections created on the fly, so we have to create it here
-  //         if (documents.total_pages > 1) $scope.paginationRange = _.range(1, documents.total_pages+1);
-  //       }
-  //     });
-  //   });
-  // }])
-  // .controller('WorkCtrl', ['$scope', '$routeParams', 'Prismic', '$location', function($scope, $routeParams, Prismic, $location) {
-  //   Prismic.document($routeParams.id).then(function(document){
-  //     if (document.slug === $routeParams.slug) {
-  //       Prismic.ctx().then(function(ctx) {
-  //         $scope.documentHtml = document.asHtml(ctx);
-  //       })
-  //     }
-  //     else if (document.slugs.indexOf($routeParams.slug) >= 0) {
-  //       $location.path('/document/'+document.id+'/'+document.slug);
-  //     }
-  //     else {
-  //       // Should display some kind of error; will just redirect to / for now
-  //       $location.path('/');
-  //     }
-  //   });
-  // }])
-  // .controller('GallerySearchCtrl', ['$scope', '$routeParams', 'Prismic', function($scope, $routeParams, Prismic) {
-  //   $scope.searchq = $routeParams.q;
-  //   $scope.q = $routeParams.q;
-  //   var page = parseInt($routeParams.page) || "1";
-  //   Prismic.ctx().then(function(ctx){
-  //     ctx.api.form('everything').query('[[:d = fulltext(document, "'+$routeParams.q+'")]]')
-  //     .page(page).ref(ctx.ref).submit(function(err, documents){
-  //       if (err) {
-  //         // Should display some kind of error; will just redirect to / for now
-  //         $location.path('/');
-  //       }
-  //       else {
-  //         $scope.documents = documents;
-  //         // Angular doesn't repeat over collections created on the fly, so we have to create it here
-  //         if (documents.total_pages > 1) $scope.paginationRange = _.range(1, documents.total_pages+1);
-  //       }
-  //     });
-  //   });
-  // }]);
+  gallery.directive('galleryItem', function () {
+      return {
+        restrict: 'AC',
+        link: function (scope, elem, attrs) {
+          elem.imagesLoaded(function () {
+            elem.packery('#gallery-list').packery('reload');
+          });
+        }
+      };
+    });
+
+})();

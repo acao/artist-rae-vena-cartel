@@ -8,12 +8,13 @@ body#home, body#products
 
     li.product
       box-sizing: border-box
-      float: left
+      display: inline-block
       padding-bottom: $marginSize
       padding-right: $marginSize
       max-width: 30%
+      min-height: 300px
 
-      &:nth-child(3n+1)
+      &:nth-child(5n+1)
         clear: left
 
     img
@@ -26,3 +27,11 @@ body#home, body#products
 
     .pagination span.disabled
       display: none
+
+#products-nav
+  ul.products-menu
+    li
+      margin: 0% 15px
+      display: inline-block
+      a
+        font-size: 150%

@@ -3,7 +3,39 @@
 
 body
   color: #{"{{ theme.text_color }}"}
-  font: 14px/1.4 normal #{"{{ theme.text_font | font_family }}"}
+  font: 14px/1.4 normal 'Cherry Swash', Helvetica, sans
+
+.image-footer
+  /* Location of the image */
+  //background-image: url(images/home.jpg)
+
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center
+
+  /* Background image doesn't tile */
+  background-repeat: no-repeat
+
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover
+
+  /* Set a background color that will be displayed
+     while the background image is loading */
+  background-color: white
+
+  min-height: 1100px
+
+#home .image-footer
+  background-image: url(images/home.jpg)
+
+#contact .image-footer
+  background-image: url(images/contact.jpg)
+
+#tour .image-footer
+  background-image: url(images/tour.jpg)
+
+#about .image-footer
+  background-image: url(images/about.jpg)
 
 a
   color: #72C29B
@@ -87,8 +119,24 @@ aside
 
 section.content
   display: table-cell
+  padding-left: 0px
+  width: 100%
+
+section.content.product
   padding-left: $marginSize
   width: 80%
+
+body#about
+  section.content
+
+    text-align: center
+    p
+      padding-bottom: 1em
+      display: block
+      margin: 0 auto
+      width: 50%
+      font-size: 150%
+
 
 form
   li
@@ -114,3 +162,20 @@ form
     border-bottom: 1px soldi #A65A5A
     color: #fff
     padding: 3px 10px
+
+.contact
+  padding: 260px
+  text-align: center
+
+footer
+  padding: 10px
+  background-color: black
+  color: #eee
+  a
+    color: white
+  span.text
+    text-indent: -9999px
+    visibility: hidden
+  ul
+    li
+      display: inline-block

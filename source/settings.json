@@ -1,6 +1,7 @@
 {
   "name": "Rae Vena Cartel",
   "version": "0.0.1",
+  "locale": "en",
   "images": [
     {
       "variable": "logo",

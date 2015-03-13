@@ -1,0 +1,28 @@
+{
+  "version": "0.0.1",
+  "name": "angular-prismic",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.2.6",
+    "prismic.io": "~1.0.5"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.6"
+  },
+  "homepage": "https://github.com/kennethlynne/angular-prismic",
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.1",
+    "commit": "9addf2ed1c679f44a128c9e4b7d33f22e3eb3ae1"
+  },
+  "_source": "git://github.com/kennethlynne/angular-prismic.git",
+  "_target": "~0.0.1",
+  "_originalSource": "angular-prismic",
+  "_direct": true
+}
