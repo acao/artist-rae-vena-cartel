@@ -1,0 +1,17 @@
+{% raw %}
+<div ng-controller="galleryCtrl" >
+  <div class="gallery-list" >
+      <!--<li class="masonry-brick" data-ng-init="init()" ng-repeat="artwork in artworks track by artwork.id" >-->
+  <!--     TITLE
+      {{ $index }}
+        {{ artwork.type }}
+        {{ artwork.slug }} -->
+       <!-- <a gallery-item rel="gallery" href="{{ artwork.fragments['work.photo'].value.main.url }}">-->
+          <img   ng-repeat="artwork in artworks track by artwork.id"  alt="{{ artwork.fragments['work.title'].value }}" data-highres="{{ artwork.fragments['work.photo'].value.main.url }}" ng-src="{{ artwork.fragments['work.photo'].value.main.url }}"></img>
+        <!--</a>
+        <div prismic-html fragment="work.photo"></div>
+        -->
+     <!-- </li> -->
+</div>
+</div>
+{% endraw %}

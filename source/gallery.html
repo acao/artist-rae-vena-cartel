@@ -1,14 +1,21 @@
 {% raw %}
-  <ul ng-controller="galleryCtrl" id="gallery-list"  column-width="200">
-    <li class="masonry-brick" data-ng-init="init()" ng-repeat="artwork in artworks track by artwork.id" >
-<!--     TITLE
-    {{ $index }}
-      {{ artwork.type }}
-      {{ artwork.slug }} -->
-      <a rel="gallery" class="fancybox" href="{{ artwork.fragments['work.photo'].value.main.url }}">
-      <img alt="{{ artwork.fragments['work.title'].value }}" ng-src="{{ artwork.fragments['work.photo'].value.main.url }}"></img>
-      </a>
-      <div prismic-html fragment="work.photo"></div>
-    </li>
-</ul>
+<div ng-controller="galleryCtrl" >
+  <div ng-repeat="(key, set) in galleryCollection track by key">
+    <h2>{{ set.year }}</h2>
+    <div class="zoomwall">
+      <img ng-repeat="artwork in set.items| orderBy: 'set.sort'"  alt="{{ artwork.fragments['work.title'].value }}" data-highres="{{ artwork.fragments['work.photo'].value.main.url }}" ng-src="{{ artwork.fragments['work.photo'].value.main.url }}"></img>
+    </div>
+  </div>
+  <script type="text/javascript">
+    window.onload = function() {
+      var galleries = document.getElementsByClass("zoomwall");
+      angular.forEach(galleries, function IterateGalleries(gallery){
+        zoomwall.create(gallery.getElementById("gallery-list"), true);
+        console.log('catsss!')
+      });
+
+      console.log('cats!');
+    };
+  </script>
+</div>
 {% endraw %}
