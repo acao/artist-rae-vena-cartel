@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+s<!DOCTYPE html>
 <html ng-app="gallery">
   <head>
     <title>{{ store.name }} &mdash; {{ page.name }}</title>
@@ -22,9 +22,9 @@
     <header>
       <a href="/" title="{{ store.name | escape }}">
         {% if theme.logo != blank %}
-        <img src="{{ 'logo.png' | theme_image_url}}" alt="{{ store.name }}">
+        <img src="{{ theme_image_url }}" alt="{{ store.name }}">
         {% else %}
-        <img src="{{ 'logo.png' | theme_image_url}}" alt="{{ store.name }}">
+        <img src="{{ image_image_url }}" alt="{{ store.name }}">
         {% endif %}
       </a>
       <nav id="main-nav" role="navigation">

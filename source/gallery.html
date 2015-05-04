@@ -8,8 +8,8 @@
   </div>
   <script type="text/javascript">
     window.onload = function() {
-      var galleries = document.getElementsByClass("zoomwall");
-      angular.forEach(galleries, function IterateGalleries(gallery){
+      var galleries = document.getElementsByClassName("zoomwall");
+      angular.forEach(galleries.children, function IterateGalleries(gallery){
         zoomwall.create(gallery.getElementById("gallery-list"), true);
         console.log('catsss!')
       });
