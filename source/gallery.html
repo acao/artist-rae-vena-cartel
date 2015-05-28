@@ -1,18 +1,18 @@
 {% raw %}
 <div ng-controller="galleryCtrl" >
   <div id="zoomwall" class="zoomwall">
-      <img ng-repeat="artwork in galleryCollection"  alt="{{ artwork.fragments['work.title'].value }}" data-highres="{{ artwork.fragments['work.photo'].value.main.url }}" ng-src="{{ artwork.fragments['work.photo'].value.main.url }}"></img>
+  <!-- Loop over $scope.galleryCollection, use prismic fragments. See console output for response object format -->
+      <img
+      ng-repeat="artwork in galleryCollection"
+      alt="{{ artwork.fragments['work.title'].value }}"
+      data-highres="{{ artwork.fragments['work.photo'].value.main.url }}"
+      ng-src="{{ artwork.fragments['work.photo'].value.main.url }}">
+      </img>
   </div>
   <script type="text/javascript">
     window.onload = function() {
+      // Tried invoking zoomwall with angular, but couldn't get the right load order without having to do all of this with fancy directives
       zoomwall.create(document.getElementById('zoomwall'), true);
-      // var galleries = Array.prototype.slice.call(document.getElementsByClassName("zoomwall"));
-      // console.log(galleries);
-      // galleries.forEach(function IterateGalleries(gallery){
-      //   zoomwall.create(gallery, true);
-      //   console.log('catsss!')
-      // });
-      // console.log('cats!');
     };
   </script>
 </div>
