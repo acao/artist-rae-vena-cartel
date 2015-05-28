@@ -34,21 +34,14 @@
   gallery.controller('galleryCtrl', ['$scope', '$routeParams', 'Prismic', function($scope, $routeParams, Prismic, lodash) {
     console.log('hey!');
 
-    function getYear(year, key){
-      if (!year){
-        console.error('no year supplied');
-        return
-      }
-      if (year.length !== 4){
-        console.error('improper length');
-        return
-      }
+    function getYears(year, key){
       Prismic.api().then(function(api){
         return Prismic.ctx()
         .then(function(ctx){
           api.form('everything')
           .query('[[:d = at(document.type, "work")]]')
-          .query('[[:d = at(my.work.year, "' + year + '")]]')
+          // .query('[[:d = at(my.work.year, "' + year + '")]]')
+          .orderings('[my.work.year desc, my.work.sort]')
           .pageSize(100).page(0)
           .ref(ctx.ref).submit(function(err, queryResult) {
             if (err){
@@ -56,23 +49,11 @@
               return;
             }
             //console.log(queryResult);
-            $scope.galleryCollection[key] = {'year': year , 'items': queryResult.results};
+            $scope.galleryCollection = queryResult.results;
             console.log($scope.galleryCollection);
           });
         });
       });
-    }
-
-    function getYears(){
-      $scope.galleryCollection = [];
-      var key=0;
-      var years = ["2015", "2014", "2013", "2012", "2011"];
-      angular.forEach(years, function(year, key){
-        getYear(year, key);
-        key++;
-      })
-      console.log($scope.galleryCollection)
-      console.log('woah');
     }
 
     getYears();
