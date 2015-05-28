@@ -63,13 +63,12 @@ https://github.com/GuideToKulchur/press
 
 She would probably not want to have to re-upload all her artwork though.
 
-### Todo
+## Todo
 
-[ ] Fix alignment of nav
-[ ] Implement standalone off-canvas nav using media queries
-[ ] Add events view (galleries.js & galleries.html should be a boon here)
-[ ] Add available originals view, again galleries is helpful
-[ ] Fix gallery zoomwall (I swear it's based on order of DOM events)
-[ ] Add gallery year spacers (I'd suggest just uploading images to Prismic and using the load order property)
-[ ] Clean up store listing and store page layout and styles
-
+- [ ] Fix alignment of nav
+- [ ] Implement standalone off-canvas nav using media queries
+- [ ] Add events view (galleries.js & galleries.html should be a boon here)
+- [ ] Add available originals view, again galleries is helpful
+- [ ] Fix gallery zoomwall (I swear it's based on order of DOM events)
+- [ ] Add gallery year spacers (I'd suggest just uploading images to Prismic and using the load order property)
+- [ ] Clean up store listing and store page layout and styles
